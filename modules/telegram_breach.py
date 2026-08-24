@@ -25,9 +25,11 @@ CHANNELS = {
 # Telegram
 TG_API_ID_RAW = os.getenv("TG_API_ID", "").strip()
 TG_API_HASH = os.getenv("TG_API_HASH", "").strip()
+TG_BOT_TOKEN = os.getenv("TG_BOT_TOKEN", "").strip()
 TG_CHANNEL = os.getenv("TG_CHANNEL", "").strip()
 TG_API_ID = int(TG_API_ID_RAW) if TG_API_ID_RAW else 0
 TELEGRAM_ENABLED = bool(TG_API_ID and TG_API_HASH and TG_CHANNEL)
+TELEGRAM_BOT_MODE = bool(TELEGRAM_ENABLED and TG_BOT_TOKEN)
 
 # State files
 MISP_STATE_FILE = "seen_events.json"
@@ -148,9 +150,15 @@ async def poll_telegram():
             return
 
         if not tg_client.is_connected():
-            await tg_client.connect()
+            if TELEGRAM_BOT_MODE:
+                await tg_client.start(bot_token=TG_BOT_TOKEN)
+            else:
+                await tg_client.connect()
 
-        if not await tg_client.is_user_authorized():
+        if TELEGRAM_BOT_MODE:
+            if not tg_client.is_connected():
+                return
+        elif not await tg_client.is_user_authorized():
             return
 
         entity = await tg_client.get_entity(f"@{TG_CHANNEL.lstrip('@')}")
@@ -198,8 +206,15 @@ async def poll_telegram():
 
 @client.event
 async def on_ready():
-    if TELEGRAM_ENABLED and tg_client is not None:
-        await tg_client.connect()
+    try:
+        if TELEGRAM_ENABLED and tg_client is not None and not tg_client.is_connected():
+            if TELEGRAM_BOT_MODE:
+                await tg_client.start(bot_token=TG_BOT_TOKEN)
+            else:
+                await tg_client.connect()
+    except Exception:
+        pass
+
     poll_misp.start()
     if TELEGRAM_ENABLED:
         poll_telegram.start()

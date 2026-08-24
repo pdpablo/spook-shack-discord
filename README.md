@@ -55,9 +55,21 @@ ghcr.io/pdpablo/spook-shack-discord:latest
 
 If Hostinger cannot pull the image, make the GHCR package **public** in GitHub Package settings.
 
+### Getting a Telegram bot token
+
+1. Open Telegram and talk to [@BotFather](https://t.me/BotFather).
+2. Send `/newbot`.
+3. Follow the prompts to choose a bot name and username.
+4. BotFather will give you a token — put that value in `TG_BOT_TOKEN`.
+5. Add the bot to the Telegram channel/group you want to read and give it permission to view posts.
+
 ### Environment file
 
 Copy `.env.example` to `.env` and fill in your Discord token, API keys, Telegram values, and channel IDs.
+
+For Telegram, you can either:
+- set `TG_BOT_TOKEN` for a bot account, or
+- leave it blank and use an existing `tg_session.session` user session
 
 ### Persisted data
 

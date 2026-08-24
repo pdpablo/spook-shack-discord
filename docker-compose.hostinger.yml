@@ -5,9 +5,6 @@ services:
     env_file:
       - .env
     environment:
-      KAMANOSUKE_HOME: /data
+      KAMANOSUKE_HOME: /opt/data
     volumes:
-      - spook-shack-data:/data
-
-volumes:
-  spook-shack-data:
+      - ./data:/opt/data

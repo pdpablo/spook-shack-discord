@@ -63,6 +63,20 @@ If Hostinger cannot pull the image, make the GHCR package **public** in GitHub P
 4. BotFather will give you a token — put that value in `TG_BOT_TOKEN`.
 5. Add the bot to the Telegram channel/group you want to read and give it permission to view posts.
 
+### Discord bot invite permissions
+
+Use this invite URL to add the bot with the minimum permissions needed to view channels, send messages, and read message history:
+
+```text
+https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=68608
+```
+
+If you plan to use the bot in forum/thread channels where it must post into threads, use the thread-enabled variant:
+
+```text
+https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=330752
+```
+
 ### Environment file
 
 Copy `.env.example` to `.env` and fill in your Discord token, API keys, Telegram values, and channel IDs.

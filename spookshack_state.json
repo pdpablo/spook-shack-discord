@@ -1,0 +1,207 @@
+{
+  "task_health": {
+    "rss_paranormal_startup": {
+      "last_start": "2026-02-09 20:53 UTC",
+      "running": false,
+      "last_success": "2026-02-09 20:53 UTC",
+      "last_duration_sec": 1.25
+    },
+    "rss_paranormal": {
+      "last_start": "2026-02-09 20:53 UTC",
+      "running": false,
+      "last_success": "2026-02-09 20:53 UTC",
+      "last_duration_sec": 2.08
+    },
+    "misp_feed": {
+      "last_start": "2026-02-09 20:53 UTC",
+      "running": false,
+      "last_failure": "2026-02-09 20:47 UTC",
+      "last_duration_sec": 0.4,
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/misp_feed.py\", line 14, in poll_misp\n    async with http_session.get(MISP_FEED_URL) as r:\n               ^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n",
+      "last_success": "2026-02-09 20:53 UTC"
+    },
+    "telegram_breach": {
+      "last_start": "2026-02-11 20:56 UTC",
+      "running": false,
+      "last_failure": "2026-02-09 22:56 UTC",
+      "last_duration_sec": 0.38,
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/telegram_breach.py\", line 56, in poll_telegram\n    await tg_client.start(bot_token=TG_BOT_TOKEN)\n  File \"/opt/kamanosuke/venv/lib/python3.11/site-packages/telethon/client/auth.py\", line 167, in _start\n    value = phone()\n            ^^^^^^^\nEOFError: EOF when reading a line\n",
+      "last_success": "2026-02-11 20:56 UTC"
+    },
+    "ransomware_live": {
+      "last_start": "2026-02-09 21:40 UTC",
+      "running": false,
+      "last_failure": "2026-02-09 20:51 UTC",
+      "last_duration_sec": 1.82,
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/ransomware_live.py\", line 21, in ransomware_loop\n    f\"\ud83c\udf0d **Ransomware victim**: {data[0].get('victim')}\"\n                                ~~~~^^^\nKeyError: 0\n",
+      "last_success": "2026-02-09 21:40 UTC"
+    },
+    "rss_lounge": {
+      "last_start": "2026-02-09 20:53 UTC",
+      "running": false,
+      "last_success": "2026-02-09 20:53 UTC",
+      "last_duration_sec": 0.77
+    },
+    "hibp_haunt": {
+      "last_start": "2026-02-09 20:53 UTC",
+      "running": false,
+      "last_success": "2026-02-09 20:53 UTC",
+      "last_duration_sec": 0.0
+    },
+    "onion_watch": {
+      "last_start": "2026-02-09 22:03 UTC",
+      "running": true,
+      "last_success": "2026-02-09 20:53 UTC",
+      "last_duration_sec": 0.0,
+      "last_failure": "2026-02-09 22:03 UTC",
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/onion_watch.py\", line 26, in onion_watch_loop\n    with open(ONION_FILE) as f:\n         ^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/opt/kamanosuke/onions.txt'\n",
+      "last_error": "FileNotFoundError: [Errno 2] No such file or directory: '/opt/kamanosuke/onions.txt'"
+    },
+    "creepy_crawlies": {
+      "last_start": "2026-02-10 13:07 UTC",
+      "running": false,
+      "last_success": "2026-02-10 13:07 UTC",
+      "last_duration_sec": 2.87,
+      "last_failure": "2026-02-09 22:01 UTC",
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/nginx_creepy_crawlies.py\", line 22, in creepy_crawlies_loop\n    with open(LOG, errors=\"ignore\") as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '/var/log/nginx/access.log'\n"
+    },
+    "paranormal_startup": {
+      "last_start": "2026-02-09 23:31 UTC",
+      "running": false,
+      "last_success": "2026-02-09 23:31 UTC",
+      "last_duration_sec": 0.78
+    },
+    "paranormal_discussion": {
+      "last_start": "2026-02-11 21:11 UTC",
+      "running": false,
+      "last_success": "2026-02-11 21:11 UTC",
+      "last_duration_sec": 2.34
+    },
+    "weekly_report": {
+      "last_start": "2026-02-09 22:18 UTC",
+      "running": false,
+      "last_success": "2026-02-09 22:18 UTC",
+      "last_duration_sec": 0.0
+    },
+    "threatcluster_misp": {
+      "last_start": "2026-02-11 21:11 UTC",
+      "running": false,
+      "last_success": "2026-02-11 21:11 UTC",
+      "last_duration_sec": 2.61
+    },
+    "telegram_data_leak": {
+      "last_start": "2026-02-09 22:42 UTC",
+      "running": false,
+      "last_success": "2026-02-09 22:42 UTC",
+      "last_duration_sec": 0.81
+    },
+    "shack_lounge": {
+      "last_start": "2026-02-11 21:11 UTC",
+      "running": false,
+      "last_success": "2026-02-11 21:11 UTC",
+      "last_duration_sec": 0.0,
+      "last_failure": "2026-02-09 23:41 UTC",
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/rss_discussions.py\", line 198, in lounge_loop\n    await channel.send(\n  File \"/opt/kamanosuke/venv/lib/python3.11/site-packages/discord/abc.py\", line 1703, in send\n    data = await state.http.send_message(channel.id, params=params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\naiohttp.client_exceptions.ServerDisconnectedError: Server disconnected\n"
+    },
+    "hibp_monitor": {
+      "last_start": "2026-02-10 12:36 UTC",
+      "running": false,
+      "last_success": "2026-02-10 12:36 UTC",
+      "last_duration_sec": 0.12,
+      "last_failure": "2026-02-10 00:17 UTC",
+      "trace": "Traceback (most recent call last):\n  File \"/opt/kamanosuke/core/health.py\", line 39, in wrapper\n    result = await func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/hibp_haunt.py\", line 139, in haunt_monitor\n    breaches = await hibp_lookup(session, target, target_type)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/kamanosuke/modules/hibp_haunt.py\", line 119, in hibp_lookup\n    raise RuntimeError(f\"HIBP API error {resp.status}\")\nRuntimeError: HIBP API error 429\n"
+    },
+    "onion_site_watch": {
+      "last_start": "2026-02-09 21:40 UTC",
+      "running": false,
+      "last_success": "2026-02-09 21:40 UTC",
+      "last_duration_sec": 0.0
+    },
+    "latest_cve": {
+      "last_start": "2026-02-11 21:11 UTC",
+      "running": false,
+      "last_success": "2026-02-11 21:11 UTC",
+      "last_duration_sec": 0.49
+    },
+    "ransomware_feed": {
+      "last_start": "2026-02-09 23:21 UTC",
+      "running": false,
+      "last_success": "2026-02-09 23:21 UTC",
+      "last_duration_sec": 0.88
+    },
+    "ransomware_global": {
+      "last_start": "2026-02-11 21:11 UTC",
+      "running": false,
+      "last_success": "2026-02-11 21:11 UTC",
+      "last_duration_sec": 1.07
+    },
+    "hibp_hourly": {
+      "last_start": "2026-02-11 21:11 UTC",
+      "running": false,
+      "last_success": "2026-02-11 21:11 UTC",
+      "last_duration_sec": 8.49
+    },
+    "pastebin_watch": {
+      "last_start": "2026-02-10 15:34 UTC",
+      "running": false,
+      "last_success": "2026-02-10 15:34 UTC",
+      "last_duration_sec": 0.01
+    },
+    "paste_dork_watch": {
+      "last_start": "2026-02-11 14:49 UTC",
+      "running": false,
+      "last_success": "2026-02-11 14:49 UTC",
+      "last_duration_sec": 0.0
+    }
+  },
+  "posted_links": {
+    "paranormal": [
+      "https://www.atlasobscura.com/places/cemetery-monument-in-wawer",
+      "https://www.atlasobscura.com/places/the-parliament-of-trees",
+      "https://www.atlasobscura.com/places/schoenenkwartier",
+      "https://www.atlasobscura.com/places/oracle-of-trophonius",
+      "https://www.atlasobscura.com/places/luss-hogback-stone",
+      "https://www.atlasobscura.com/places/ayapua-boat-museum",
+      "https://www.atlasobscura.com/places/savannah-pirates-and-treasure-museum",
+      "https://www.atlasobscura.com/places/eternity-pillars",
+      "https://www.atlasobscura.com/places/three-figures",
+      "https://www.atlasobscura.com/places/match-museum",
+      "https://www.atlasobscura.com/places/goldfield-historic-high-school"
+    ],
+    "lounge": [
+      "https://www.theverge.com/games/875995/toyota-fluorite-game-engine",
+      "https://www.theverge.com/gadgets/865281/valentines-day-2026-gift-ideas-for-her-girlfriend-wife-partner",
+      "https://www.theverge.com/tech/875859/apple-is-killing-the-old-homekit-tomorrow",
+      "https://www.theverge.com/entertainment/875886/super-bowl-2026-ai-generated-ads-were-terrible",
+      "https://www.theverge.com/ai-artificial-intelligence/876029/openai-testing-ads-in-chatgpt",
+      "https://www.theverge.com/policy/875981/fcc-doge-frequency-forward-brendan-carr-discovery",
+      "https://www.theverge.com/games/876038/riot-games-2xko-layoffs-job-cuts-league-of-legends",
+      "https://www.theverge.com/transportation/875799/ferrari-luce-jony-ive-interior-design-photos",
+      "https://www.theverge.com/gadgets/875742/google-pixel9a-switch-2-case-netgear-gigabit-deal-sale",
+      "https://www.theverge.com/tech/875782/sony-wf-1000xm6-earbuds-spec-leak",
+      "https://www.theverge.com/tech/876080/mrbeast-step-mobile-banking-app"
+    ]
+  },
+  "misp_seen": [
+    "6a92c98e-4a48-52c2-8037-7664c1436da3",
+    "89291670-d51f-5a86-9bdc-9fabdbfb481a",
+    "a48c1037-aef4-5145-8eb3-3a7219dfe893",
+    "65093c62-5a8f-51c6-9c37-fed9d8a0514c",
+    "c231e809-6cf7-5577-8246-bfac188aca5c",
+    "61584ae4-b59a-51ad-b400-d93f43604dce",
+    "13c69858-5c9c-5e0e-97ee-0569c11e1f16",
+    "bfe55c62-f4d1-5199-b6db-d17fb1c5fe24",
+    "ff1407a7-dcfa-511e-9bbd-8b29fd06e01d",
+    "f46967a7-8d2e-55de-b695-55563b9a4759",
+    "487dcefb-028b-5c33-a226-5b8a5b1b3b24",
+    "26b0326d-0c9f-5787-b530-11fc33950b7a",
+    "fd74ad33-ed94-5c53-9def-efca21ea21a1",
+    "ea0d0e8b-a223-5bb8-bf7e-28c858065917",
+    "ddd7101a-22ac-5251-8854-339582b00c5f",
+    "0bb4e56f-b829-5548-bfe5-92712013cd06",
+    "9e4c4473-205b-5d8c-9cd2-11f6f49ac2dd",
+    "d4dc0c67-9424-55f6-977f-460fdd28a626"
+  ],
+  "last_cve": "CVE-1999-0095",
+  "nginx_offset": 301813
+}

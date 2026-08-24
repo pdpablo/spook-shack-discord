@@ -1,0 +1,21 @@
+# --- Core ---
+discord.py>=2.3.2
+aiohttp>=3.9.0
+python-dotenv>=1.0.0
+
+# --- OpenAI ---
+openai>=1.0.0
+
+# --- Feeds & parsing ---
+feedparser>=6.0.10
+requests>=2.31.0
+
+# --- Telegram ---
+telethon>=1.34.0
+
+# --- Threat intel / takedown ---
+python-whois>=0.9.4
+
+# --- Optional but recommended ---
+cryptography>=41.0.0
+

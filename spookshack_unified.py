@@ -20,7 +20,6 @@ import aiohttp
 import discord
 from discord.ext import tasks, commands
 from dotenv import load_dotenv
-from telethon import TelegramClient
 import feedparser
 from openai import AsyncOpenAI
 
@@ -66,10 +65,6 @@ TAKEDOWN_FORUM_CHANNEL_ID = int(os.getenv("TAKEDOWN_FORUM_CHANNEL_ID"))
 REPORT_COMMAND_CHANNEL_ID = int(os.getenv("REPORT_COMMAND_CHANNEL_ID"))
 REPORT_FORUM_CHANNEL_ID = int(os.getenv("REPORT_FORUM_CHANNEL_ID"))
 
-# Telegram
-TG_API_ID = os.getenv("TG_API_ID")
-TG_API_HASH = os.getenv("TG_API_HASH")
-TG_CHANNEL = os.getenv("TG_CHANNEL")
 
 # External feeds
 RANSOMWARELIVE_API_TOKEN = os.getenv("RANSOMWARELIVE_API_TOKEN")
@@ -245,41 +240,6 @@ async def poll_misp():
     except Exception as e:
         print("[MISP ERROR]", e)
 
-# ==========================================================
-# TELEGRAM BREACH INGEST
-# ==========================================================
-tg_client: TelegramClient | None = None
-
-@tasks.loop(seconds=POLL_INTERVAL)
-async def poll_telegram():
-    global tg_client
-
-    if not TG_API_ID or not TG_API_HASH or not TG_CHANNEL:
-        return
-
-    if not tg_client:
-        tg_client = TelegramClient("tg_session", int(TG_API_ID), TG_API_HASH)
-        await tg_client.start()
-
-    last_id = STATE.get("tg_last_id", 0)
-    chan = client.get_channel(CHANNEL_BREACH)
-    if not chan:
-        return
-
-    entity = await tg_client.get_entity(TG_CHANNEL)
-    msgs = await tg_client.get_messages(entity, min_id=last_id, limit=100)
-
-    for msg in reversed(msgs):
-        if msg.message:
-            await chan.send(embed=discord.Embed(
-                title="🚨 Breach Alert (Telegram)",
-                description=msg.message[:4000],
-                color=discord.Color.dark_red()
-            ))
-            last_id = msg.id
-
-    STATE["tg_last_id"] = last_id
-    save_state(STATE)
 
 # ==========================================================
 # DISCORD READY
@@ -301,7 +261,6 @@ async def on_ready():
 
     db_init()
     poll_misp.start()
-    poll_telegram.start()
 
     print("[+] All systems operational 🕯️")
 

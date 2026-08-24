@@ -56,13 +56,6 @@ CHANNEL_BREACH = int(os.getenv("CHANNEL_BREACH", "0"))
 ACTOR_DOSSIER_CHANNEL_ID = int(os.getenv("ACTOR_DOSSIER_CHANNEL_ID", "0"))
 ACTOR_DOSSIER_FORUM_ID = int(os.getenv("ACTOR_DOSSIER_FORUM_ID", "0"))
 # =====================================================
-# TELEGRAM
-# =====================================================
-TG_API_ID = int(os.getenv("TG_API_ID", "0"))
-TG_API_HASH = os.getenv("TG_API_HASH")
-TG_CHANNEL = os.getenv("TG_CHANNEL")
-
-# =====================================================
 # EXTERNAL APIs
 # =====================================================
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")

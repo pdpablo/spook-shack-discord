@@ -32,7 +32,6 @@ from modules.hibp_haunt import haunt_monitor, start_haunt_monitor, handle_haunt
 # PLAIN ASYNC BACKGROUND RUNNERS
 # =====================================================
 from modules.nginx_creepy_crawlies import creepy_crawlies_loop
-from modules.telegram_breach import poll_telegram
 
 # =====================================================
 # COMMAND HANDLERS
@@ -53,14 +52,6 @@ async def creepy_runner():
             print(f"[Creepy] Error: {e}", flush=True)
         await asyncio.sleep(6 * 60 * 60)  # every 6 hours
 
-
-async def telegram_runner():
-    while True:
-        try:
-            await poll_telegram()
-        except Exception as e:
-            print(f"[Telegram] Error: {e}", flush=True)
-        await asyncio.sleep(300)  # every 5 minutes
 
 
 # =====================================================
@@ -93,9 +84,6 @@ async def on_ready():
     # Plain asyncio background loops
     if not hasattr(client, "_creepy_task"):
         client._creepy_task = asyncio.create_task(creepy_runner())
-
-    if not hasattr(client, "_telegram_task"):
-        client._telegram_task = asyncio.create_task(telegram_runner())
 
     print("🕯️ Spook Shack online — all systems stable", flush=True)
 

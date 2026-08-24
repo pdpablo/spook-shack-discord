@@ -8,7 +8,6 @@ Spook Shack Discord is a Discord-based threat-intelligence bot for the Spook Sha
 - Watches ransomware.live for recent victim claims
 - Monitors Have I Been Pwned targets
 - Pulls the latest NVD CVEs
-- Ingests Telegram breach posts
 - Scans nginx access logs for suspicious crawl activity
 - Generates actor dossiers, weekly reports, and takedown templates
 - Dorks paste sites and alerts on new hits
@@ -55,14 +54,6 @@ ghcr.io/pdpablo/spook-shack-discord:latest
 
 If Hostinger cannot pull the image, make the GHCR package **public** in GitHub Package settings.
 
-### Getting a Telegram bot token
-
-1. Open Telegram and talk to [@BotFather](https://t.me/BotFather).
-2. Send `/newbot`.
-3. Follow the prompts to choose a bot name and username.
-4. BotFather will give you a token — put that value in `TG_BOT_TOKEN`.
-5. Add the bot to the Telegram channel/group you want to read and give it permission to view posts.
-
 ### Discord bot invite permissions
 
 Use this invite URL to add the bot with the minimum permissions needed to view channels, send messages, and read message history:
@@ -71,23 +62,21 @@ Use this invite URL to add the bot with the minimum permissions needed to view c
 https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=68608
 ```
 
-If you plan to use the bot in forum/thread channels where it must post into threads, use the thread-enabled variant:
+If you plan to use the bot in forum/thread channels where it must create and reply inside threads, use the thread-enabled variant:
 
 ```text
-https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=330752
+https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=309237713920
 ```
 
 ### Environment file
 
-Copy `.env.example` to `.env` and fill in your Discord token, API keys, Telegram values, and channel IDs.
+Copy `.env.example` to `.env` and fill in your Discord token, API keys, and channel IDs.
 
 Also enable **Message Content Intent** for the bot in the Discord Developer Portal, or prefix commands like `!shodan` and `!haunt` will never arrive.
 
-For Telegram, you can either:
-- set `TG_BOT_TOKEN` for a bot account, or
-- leave it blank and use an existing `tg_session.session` user session
-
 For HIBP / `!haunt`, set `HIBP_COMMAND_CHANNEL_ID` to the channel that should accept the command. If you leave it unset, the bot falls back to `SPOOK_CHANNEL_ID`.
+
+The NVD CVE feed posts the latest vulnerability announcements into `NVD_CVE_CHANNEL_ID`.
 
 ### Persisted data
 

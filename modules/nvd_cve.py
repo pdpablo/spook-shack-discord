@@ -24,28 +24,49 @@ def format_cve(cve):
 async def cve_loop():
     await http.wait_for_http()
 
-    params = {"resultsPerPage": 1}
+    if not NVD_CVE_CHANNEL_ID:
+        return
+
+    params = {"resultsPerPage": 5}
     headers = {"apiKey": NVD_API_KEY} if NVD_API_KEY else {}
 
     async with http.http_session.get(NVD_URL, params=params, headers=headers) as r:
         data = await r.json()
 
-    item = data["vulnerabilities"][0]["cve"]
-    cve_id = item["id"]
-
-    if STATE.get("last_cve") == cve_id:
+    vulnerabilities = data.get("vulnerabilities", [])
+    if not vulnerabilities:
         return
 
-    metrics = item.get("metrics", {})
-    cvss = metrics.get("cvssMetricV31", [{}])[0].get("cvssData", {})
+    last_cve = STATE.get("last_cve")
+    newest_id = vulnerabilities[0]["cve"]["id"]
 
-    msg = format_cve({
-        "id": cve_id,
-        "severity": f"{cvss.get('baseSeverity','N/A')} ({cvss.get('baseScore','N/A')})",
-        "published": item["published"],
-        "summary": item["descriptions"][0]["value"][:500],
-    })
+    pending = []
+    for entry in vulnerabilities:
+        item = entry.get("cve", {})
+        cve_id = item.get("id")
+        if not cve_id:
+            continue
+        if cve_id == last_cve:
+            break
+        pending.append(item)
 
-    await client.get_channel(NVD_CVE_CHANNEL_ID).send(msg)
-    STATE["last_cve"] = cve_id
+    if not pending:
+        return
+
+    channel = client.get_channel(NVD_CVE_CHANNEL_ID)
+    if not channel:
+        return
+
+    for item in reversed(pending):
+        metrics = item.get("metrics", {})
+        cvss = metrics.get("cvssMetricV31", [{}])[0].get("cvssData", {})
+        msg = format_cve({
+            "id": item["id"],
+            "severity": f"{cvss.get('baseSeverity','N/A')} ({cvss.get('baseScore','N/A')})",
+            "published": item.get("published", "N/A"),
+            "summary": item.get("descriptions", [{}])[0].get("value", "No summary")[:500],
+        })
+        await channel.send(msg)
+
+    STATE["last_cve"] = newest_id
     save_state(STATE)

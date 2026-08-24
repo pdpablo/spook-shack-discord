@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.session
+*.db
+*.sqlite3
+*.sqlite
+state.json
+seen_events.json
+seen_telegram.txt

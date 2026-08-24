@@ -1,0 +1,13 @@
+services:
+  spook-shack-discord:
+    image: ghcr.io/pdpablo/spook-shack-discord:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      KAMANOSUKE_HOME: /data
+    volumes:
+      - spook-shack-data:/data
+
+volumes:
+  spook-shack-data:

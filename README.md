@@ -31,23 +31,41 @@ Spook Shack Discord is a Discord-based threat-intelligence bot for the Spook Sha
 
 ## Docker deployment
 
-### 1) Create your env file
-
-Copy `.env.example` to `.env` and fill in your Discord token, API keys, and channel IDs.
-
-### 2) Build and run
+### Local compose
 
 ```bash
 docker compose up -d --build
 ```
 
-### 3) Persisted data
+### Hostinger Docker Manager with GHCR
+
+This repo publishes a container image to GitHub Container Registry (GHCR) from the `main` branch and tagged releases.
+
+Use this image in Hostinger Docker Manager:
+
+```text
+ghcr.io/pdpablo/spook-shack-discord:latest
+```
+
+1. Open **hPanel → VPS → Manage → Docker Manager**.
+2. Create a new project with **Compose manually** or **Compose from URL**.
+3. Use the contents of `docker-compose.hostinger.yml`.
+4. Add your environment variables in the panel or via `.env`.
+5. Deploy the project.
+
+If Hostinger cannot pull the image, make the GHCR package **public** in GitHub Package settings.
+
+### Environment file
+
+Copy `.env.example` to `.env` and fill in your Discord token, API keys, Telegram values, and channel IDs.
+
+### Persisted data
 
 The container stores SQLite databases and JSON state under `/data`. The compose file mounts a named volume there by default.
 
 ## Notes for Hostinger VPS
 
-- The included `docker-compose.yml` uses a single app service and a persistent volume, which is compatible with a straightforward VPS Docker deployment.
+- The GHCR compose file uses a single app service and a persistent volume, which is compatible with Hostinger Docker Manager.
 - The bot binds to Discord only; there is no HTTP server to expose.
 - Keep `KAMANOSUKE_HOME=/data` so the state files and SQLite databases survive container restarts.
 

@@ -21,6 +21,7 @@ HEADERS = {
     "hibp-api-key": HIBP_API_KEY,
     "user-agent": "SpookShack-Haunt/FINAL",
 }
+HIBP_ENABLED = bool(HIBP_API_KEY)
 
 # ======================================================
 # DATABASE HELPERS
@@ -154,6 +155,9 @@ def chunk(text, limit=1900):
 # HIBP API (FULL RESPONSE FIX APPLIED)
 # ======================================================
 async def hibp_lookup(session, target, target_type):
+    if not HIBP_ENABLED:
+        return []
+
     if target_type == "email":
         # IMPORTANT: FULL breach details
         url = f"{HIBP_BASE}/breachedaccount/{target}?truncateResponse=false"
@@ -174,6 +178,9 @@ async def hibp_lookup(session, target, target_type):
 @monitored_task("hibp_hourly")
 async def haunt_monitor():
     init_tables()
+
+    if not HIBP_ENABLED:
+        return
 
     channel = client.get_channel(SPOOK_CHANNEL_ID)
     if not channel:
@@ -255,6 +262,13 @@ def start_haunt_monitor():
 # COMMAND HANDLER
 # ======================================================
 async def handle_haunt(message: discord.Message):
+    if not message.content.lower().startswith("!haunt"):
+        return False
+
+    if not HIBP_ENABLED:
+        await message.channel.send("🕯️ HIBP is not configured. Set `HIBP_API_KEY` in your `.env`.")
+        return True
+
     if not message.content.lower().startswith("!haunt"):
         return False
 

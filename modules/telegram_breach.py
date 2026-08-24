@@ -1,15 +1,16 @@
-import discord
 import requests
+import discord
 import json
 import os
 from discord.ext import tasks
 from dotenv import load_dotenv
 from telethon import TelegramClient
 
+from core.client import client
+
 # ===== LOAD ENV =====
 load_dotenv()
 
-DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 MISP_FEED_URL = os.getenv("MISP_FEED_URL")
 POLL_INTERVAL = int(os.getenv("POLL_INTERVAL", 3600))
 
@@ -36,9 +37,6 @@ MISP_STATE_FILE = "seen_events.json"
 TG_STATE_FILE = "seen_telegram.txt"
 
 # ====================
-
-intents = discord.Intents.default()
-client = discord.Client(intents=intents)
 
 tg_client = TelegramClient("tg_session", TG_API_ID, TG_API_HASH) if TELEGRAM_ENABLED else None
 
@@ -203,20 +201,3 @@ async def poll_telegram():
         pass
 
 # ---------- DISCORD EVENTS ----------
-
-@client.event
-async def on_ready():
-    try:
-        if TELEGRAM_ENABLED and tg_client is not None and not tg_client.is_connected():
-            if TELEGRAM_BOT_MODE:
-                await tg_client.start(bot_token=TG_BOT_TOKEN)
-            else:
-                await tg_client.connect()
-    except Exception:
-        pass
-
-    poll_misp.start()
-    if TELEGRAM_ENABLED:
-        poll_telegram.start()
-
-client.run(DISCORD_BOT_TOKEN)

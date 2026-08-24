@@ -67,6 +67,8 @@ If Hostinger cannot pull the image, make the GHCR package **public** in GitHub P
 
 Copy `.env.example` to `.env` and fill in your Discord token, API keys, Telegram values, and channel IDs.
 
+Also enable **Message Content Intent** for the bot in the Discord Developer Portal, or prefix commands like `!shodan` and `!haunt` will never arrive.
+
 For Telegram, you can either:
 - set `TG_BOT_TOKEN` for a bot account, or
 - leave it blank and use an existing `tg_session.session` user session

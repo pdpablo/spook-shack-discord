@@ -78,7 +78,7 @@ async def handle_shodan(message: discord.Message) -> bool:
     if message.author.bot:
         return False
 
-    if message.channel.id != SHODAN_SEARCH_CHANNEL_ID:
+    if SHODAN_SEARCH_CHANNEL_ID and message.channel.id != SHODAN_SEARCH_CHANNEL_ID:
         return False
 
     content = message.content.strip()

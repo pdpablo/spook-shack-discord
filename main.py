@@ -40,6 +40,7 @@ from modules.telegram_breach import poll_telegram
 from modules.takedown_request import handle_takedown
 from modules.weekly_reports import handle_weekly_report
 from modules.actor_dossier import handle_actor_dossier
+from modules.health_command import handle_health
 
 # =====================================================
 # ASYNC RUNNERS (NON-discord TASKS)
@@ -105,6 +106,10 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author.bot:
+        return
+
+    # --- Health ---
+    if await handle_health(message):
         return
 
     # --- Actor Dossier ---

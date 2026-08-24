@@ -1,13 +1,11 @@
-from core.client import client
 from core.state import STATE
 from core.utils import chunk_text
 
-@client.event
-async def on_message(msg):
+async def handle_health(msg):
     if msg.author.bot:
-        return
+        return False
     if msg.content.strip().lower() != "!health":
-        return
+        return False
 
     health = STATE.get("task_health", {})
     if not health:

@@ -105,7 +105,7 @@ async def ransomware_loop():
 # MANUAL SEARCH HANDLER (RESTORED + FIXED)
 # =====================================================
 async def handle_victim_search(message: discord.Message) -> bool:
-    if message.channel.id != SEARCH_CHANNEL_ID:
+    if SEARCH_CHANNEL_ID and message.channel.id != SEARCH_CHANNEL_ID:
         return False
 
     query = message.content.strip()

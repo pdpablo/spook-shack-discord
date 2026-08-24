@@ -131,7 +131,7 @@ async def handle_takedown(message) -> bool:
     if message.author.bot:
         return False
 
-    if message.channel.id != TAKEDOWN_COMMAND_CHANNEL_ID:
+    if TAKEDOWN_COMMAND_CHANNEL_ID and message.channel.id != TAKEDOWN_COMMAND_CHANNEL_ID:
         return False
 
     if not message.content.lower().startswith("!takedown"):

@@ -209,7 +209,7 @@ Explain how the actor uses its techniques operationally.
 
 async def handle_actor_dossier(message: discord.Message):
 
-    if message.channel.id != ACTOR_DOSSIER_CHANNEL_ID:
+    if ACTOR_DOSSIER_CHANNEL_ID and message.channel.id != ACTOR_DOSSIER_CHANNEL_ID:
         return False
 
     if not message.content.lower().startswith("!actor"):

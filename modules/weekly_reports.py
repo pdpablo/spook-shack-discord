@@ -17,7 +17,7 @@ async def handle_weekly_report(message) -> bool:
     if message.author.bot:
         return False
 
-    if message.channel.id != REPORT_COMMAND_CHANNEL_ID:
+    if REPORT_COMMAND_CHANNEL_ID and message.channel.id != REPORT_COMMAND_CHANNEL_ID:
         return False
 
     if not message.content.lower().startswith("!weeklyreport"):

@@ -15,17 +15,19 @@ POLL_INTERVAL = int(os.getenv("POLL_INTERVAL", 3600))
 
 # Discord channels
 CHANNELS = {
-    "ransomware": int(os.getenv("CHANNEL_RANSOMWARE")),
-    "vulnerability": int(os.getenv("CHANNEL_VULNERABILITY")),
-    "apt": int(os.getenv("CHANNEL_APT")),
-    "general": int(os.getenv("CHANNEL_GENERAL")),
-    "breach": int(os.getenv("CHANNEL_BREACH")),
+    "ransomware": int(os.getenv("CHANNEL_RANSOMWARE", "0") or 0),
+    "vulnerability": int(os.getenv("CHANNEL_VULNERABILITY", "0") or 0),
+    "apt": int(os.getenv("CHANNEL_APT", "0") or 0),
+    "general": int(os.getenv("CHANNEL_GENERAL", "0") or 0),
+    "breach": int(os.getenv("CHANNEL_BREACH", "0") or 0),
 }
 
 # Telegram
-TG_API_ID = int(os.getenv("TG_API_ID"))
-TG_API_HASH = os.getenv("TG_API_HASH")
+TG_API_ID_RAW = os.getenv("TG_API_ID", "").strip()
+TG_API_HASH = os.getenv("TG_API_HASH", "").strip()
 TG_CHANNEL = os.getenv("TG_CHANNEL", "").strip()
+TG_API_ID = int(TG_API_ID_RAW) if TG_API_ID_RAW else 0
+TELEGRAM_ENABLED = bool(TG_API_ID and TG_API_HASH and TG_CHANNEL)
 
 # State files
 MISP_STATE_FILE = "seen_events.json"
@@ -36,7 +38,7 @@ TG_STATE_FILE = "seen_telegram.txt"
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
-tg_client = TelegramClient("tg_session", TG_API_ID, TG_API_HASH)
+tg_client = TelegramClient("tg_session", TG_API_ID, TG_API_HASH) if TELEGRAM_ENABLED else None
 
 # ---------- STATE HELPERS ----------
 
@@ -142,6 +144,9 @@ async def poll_misp():
 @tasks.loop(seconds=POLL_INTERVAL)
 async def poll_telegram():
     try:
+        if not TELEGRAM_ENABLED or tg_client is None:
+            return
+
         if not tg_client.is_connected():
             await tg_client.connect()
 
@@ -193,8 +198,10 @@ async def poll_telegram():
 
 @client.event
 async def on_ready():
-    await tg_client.start()
+    if TELEGRAM_ENABLED and tg_client is not None:
+        await tg_client.connect()
     poll_misp.start()
-    poll_telegram.start()
+    if TELEGRAM_ENABLED:
+        poll_telegram.start()
 
 client.run(DISCORD_BOT_TOKEN)

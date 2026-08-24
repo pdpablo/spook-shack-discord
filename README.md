@@ -71,6 +71,8 @@ For Telegram, you can either:
 - set `TG_BOT_TOKEN` for a bot account, or
 - leave it blank and use an existing `tg_session.session` user session
 
+For HIBP / `!haunt`, set `HIBP_COMMAND_CHANNEL_ID` to the channel that should accept the command. If you leave it unset, the bot falls back to `SPOOK_CHANNEL_ID`.
+
 ### Persisted data
 
 The container stores SQLite databases and JSON state under `/data`. The compose file mounts a named volume there by default.

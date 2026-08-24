@@ -7,7 +7,7 @@ import discord
 from discord.ext import tasks
 
 from core.client import client
-from core.config import HIBP_API_KEY, SPOOK_CHANNEL_ID
+from core.config import HIBP_API_KEY, HIBP_COMMAND_CHANNEL_ID, SPOOK_CHANNEL_ID
 from core.database import DB_PATH
 from core.health import monitored_task
 
@@ -265,12 +265,13 @@ async def handle_haunt(message: discord.Message):
     if not message.content.lower().startswith("!haunt"):
         return False
 
+    allowed_channel_id = HIBP_COMMAND_CHANNEL_ID or SPOOK_CHANNEL_ID
+    if allowed_channel_id and message.channel.id != allowed_channel_id:
+        return False
+
     if not HIBP_ENABLED:
         await message.channel.send("🕯️ HIBP is not configured. Set `HIBP_API_KEY` in your `.env`.")
         return True
-
-    if not message.content.lower().startswith("!haunt"):
-        return False
 
     parts = message.content.split()
     if len(parts) < 2:

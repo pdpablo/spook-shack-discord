@@ -67,6 +67,7 @@ TG_CHANNEL = os.getenv("TG_CHANNEL")
 # =====================================================
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 HIBP_API_KEY = os.getenv("HIBP_API_KEY")
+HIBP_COMMAND_CHANNEL_ID = int(os.getenv("HIBP_COMMAND_CHANNEL_ID", "0"))
 OTX_API_KEY = os.getenv("OTX_API_KEY")
 NVD_API_KEY = os.getenv("NVD_API_KEY")
 RANSOMWARELIVE_API_TOKEN = os.getenv("RANSOMWARELIVE_API_TOKEN")

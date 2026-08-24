@@ -13,6 +13,11 @@ from modules.rss_discussions import (
     lounge_loop,
     run_paranormal_once,
 )
+from modules.pastebin_dork_watch import (
+    paste_dork_monitor,
+    handle_paste_dork,
+)
+from modules.shodan_search import handle_shodan
 
 from modules.ransomware_live import (
     ransomware_loop,
@@ -79,6 +84,7 @@ async def on_ready():
     safe_start(ransomware_loop)
     safe_start(cve_loop)
     safe_start(haunt_monitor)
+    safe_start(paste_dork_monitor)
 
     # Start HIBP background
     start_haunt_monitor()
@@ -103,6 +109,14 @@ async def on_message(message):
 
     # --- Actor Dossier ---
     if await handle_actor_dossier(message):
+        return
+
+    # --- Pastebin watch / quick search ---
+    if await handle_paste_dork(message):
+        return
+
+    # --- Shodan search ---
+    if await handle_shodan(message):
         return
 
     # --- Ransomware victim search ---

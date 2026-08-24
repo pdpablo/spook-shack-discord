@@ -17,6 +17,7 @@ DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 SIGNAL_ENTRY_CHANNEL_ID = int(os.getenv("SIGNAL_ENTRY_CHANNEL_ID", "0"))
 PARANORMAL_DISCUSSION_CHANNEL_ID = int(os.getenv("PARANORMAL_DISCUSSION_CHANNEL_ID", "0"))
 SHACK_LOUNGE_CHANNEL_ID = int(os.getenv("SHACK_LOUNGE_CHANNEL_ID", "0"))
+PASTEBIN_CHANNEL_ID = int(os.getenv("PASTEBIN_CHANNEL_ID", "0"))
 
 # =====================================================
 # INNER SHACK
@@ -48,6 +49,7 @@ TAKEDOWN_FORUM_CHANNEL_ID = int(os.getenv("TAKEDOWN_FORUM_CHANNEL_ID", "0"))
 
 REPORT_COMMAND_CHANNEL_ID = int(os.getenv("REPORT_COMMAND_CHANNEL_ID", "0"))
 REPORT_FORUM_CHANNEL_ID = int(os.getenv("REPORT_FORUM_CHANNEL_ID", "0"))
+SHODAN_SEARCH_CHANNEL_ID = int(os.getenv("SHODAN_SEARCH_CHANNEL_ID", "0"))
 
 SPOOK_CHANNEL_ID = int(os.getenv("SPOOK_CHANNEL_ID", "0"))
 CHANNEL_BREACH = int(os.getenv("CHANNEL_BREACH", "0"))
@@ -68,6 +70,7 @@ HIBP_API_KEY = os.getenv("HIBP_API_KEY")
 OTX_API_KEY = os.getenv("OTX_API_KEY")
 NVD_API_KEY = os.getenv("NVD_API_KEY")
 RANSOMWARELIVE_API_TOKEN = os.getenv("RANSOMWARELIVE_API_TOKEN")
+SHODAN_API_KEY = os.getenv("SHODAN_API_KEY")
 
 # =====================================================
 # MISP
@@ -105,6 +108,4 @@ LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 if not DISCORD_BOT_TOKEN:
     raise RuntimeError("DISCORD_BOT_TOKEN is not set")
 
-if not TG_API_ID or not TG_API_HASH:
-    raise RuntimeError("TG_API_ID / TG_API_HASH not set")
 

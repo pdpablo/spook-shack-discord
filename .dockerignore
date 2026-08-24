@@ -1,0 +1,13 @@
+__pycache__
+.git
+venv
+.venv
+*.pyc
+*.pyo
+*.db
+*.session
+*.sqlite3
+state.json
+seen_events.json
+seen_telegram.txt
+spookshack_state.json

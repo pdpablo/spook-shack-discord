@@ -1,19 +1,25 @@
 import json
 import os
+from pathlib import Path
 
-STATE_FILE = "spookshack_state.json"
+BASE_DIR = Path(os.getenv("KAMANOSUKE_HOME", "/opt/kamanosuke"))
+STATE_FILE = BASE_DIR / "state.json"
+
 
 def load_state():
-    if not os.path.exists(STATE_FILE):
+    if not STATE_FILE.exists():
         return {}
     try:
-        with open(STATE_FILE, "r") as f:
-            return json.load(f)
+        return json.loads(STATE_FILE.read_text())
     except Exception:
         return {}
 
+
 def save_state(state):
-    with open(STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = STATE_FILE.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(state, indent=2))
+    os.replace(tmp, STATE_FILE)
+
 
 STATE = load_state()

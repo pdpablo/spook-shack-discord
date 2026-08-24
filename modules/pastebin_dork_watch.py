@@ -3,7 +3,7 @@ import asyncio
 import sqlite3
 import re
 from datetime import datetime, timezone
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, parse_qs, unquote, urlparse
 
 import discord
 from discord.ext import tasks
@@ -117,7 +117,25 @@ def mark_hit(kw, url):
 # ======================================================
 # DORK SEARCH
 # ======================================================
-LINK_RE = re.compile(r'href="(https?://[^"]+)"')
+LINK_RE = re.compile(r'href="([^"]+)"')
+
+
+def _extract_ddg_url(href: str) -> str | None:
+    if not href:
+        return None
+
+    if href.startswith("//"):
+        href = "https:" + href
+
+    if href.startswith("https://duckduckgo.com/l/?") or "uddg=" in href:
+        parsed = urlparse(href)
+        params = parse_qs(parsed.query)
+        uddg = params.get("uddg", [None])[0]
+        if uddg:
+            return unquote(uddg)
+        return None
+
+    return href if href.startswith("http") else None
 
 
 async def dork_search(session, keyword):
@@ -131,14 +149,19 @@ async def dork_search(session, keyword):
             return []
 
         html = await r.text()
-        links = LINK_RE.findall(html)
+        seen = []
+        for href in LINK_RE.findall(html):
+            candidate = _extract_ddg_url(href)
+            if not candidate:
+                continue
+            if any(p in candidate.lower() for p in ["pastebin.com", "ghostbin.com", "paste.ee", "paste.mozilla.org", "hastebin.com"]):
+                seen.append(candidate.split("&")[0])
 
-        clean = []
-        for l in links:
-            if any(p in l for p in ["paste", "ghostbin", "hastebin", "paste.ee"]):
-                clean.append(l.split("&")[0])
-
-        return list(set(clean))[:10]
+        out = []
+        for item in seen:
+            if item not in out:
+                out.append(item)
+        return out[:10]
 
 # ======================================================
 # IOC EXTRACTION
